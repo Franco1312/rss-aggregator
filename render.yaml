@@ -1,0 +1,19 @@
+services:
+  - type: web
+    name: rss-aggregator
+    env: node
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        fromService:
+          type: web
+          name: rss-aggregator
+          property: port
+      - key: CACHE_TTL_MS
+        value: 300000
+      - key: NEWS_REFRESH_INTERVAL_MS
+        value: 600000
+
