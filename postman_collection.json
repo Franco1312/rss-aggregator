@@ -1,0 +1,201 @@
+{
+  "info": {
+    "name": "RSS Aggregator API",
+    "description": "API para agregar y consultar noticias económicas de Argentina desde múltiples fuentes RSS",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "https://rss-aggregator-yxql.onrender.com",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "Health",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/health",
+          "host": ["{{base_url}}"],
+          "path": ["health"]
+        },
+        "description": "Health check endpoint"
+      }
+    },
+    {
+      "name": "Get All News",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/news",
+          "host": ["{{base_url}}"],
+          "path": ["news"]
+        },
+        "description": "Get all news articles ordered by date (most recent first)"
+      }
+    },
+    {
+      "name": "Get News Paginated",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/news?limit=10&offset=0",
+          "host": ["{{base_url}}"],
+          "path": ["news"],
+          "query": [
+            {
+              "key": "limit",
+              "value": "10"
+            },
+            {
+              "key": "offset",
+              "value": "0"
+            }
+          ]
+        },
+        "description": "Get news with pagination"
+      }
+    },
+    {
+      "name": "Search News by Keyword",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/news?q=bitcoin",
+          "host": ["{{base_url}}"],
+          "path": ["news"],
+          "query": [
+            {
+              "key": "q",
+              "value": "bitcoin",
+              "description": "Search keyword"
+            }
+          ]
+        },
+        "description": "Search news by keyword in title or summary"
+      }
+    },
+    {
+      "name": "Get News by Date Range",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/news?fromDate=2024-01-01T00:00:00Z&toDate=2024-12-31T23:59:59Z",
+          "host": ["{{base_url}}"],
+          "path": ["news"],
+          "query": [
+            {
+              "key": "fromDate",
+              "value": "2024-01-01T00:00:00Z",
+              "description": "Filter from date (ISO 8601)"
+            },
+            {
+              "key": "toDate",
+              "value": "2024-12-31T23:59:59Z",
+              "description": "Filter to date (ISO 8601)"
+            }
+          ]
+        },
+        "description": "Get news within a date range"
+      }
+    },
+    {
+      "name": "Get News from Date",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/news?fromDate=2024-11-01T00:00:00Z",
+          "host": ["{{base_url}}"],
+          "path": ["news"],
+          "query": [
+            {
+              "key": "fromDate",
+              "value": "2024-11-01T00:00:00Z",
+              "description": "Filter from date (ISO 8601)"
+            }
+          ]
+        },
+        "description": "Get news from a specific date onwards"
+      }
+    },
+    {
+      "name": "Get News until Date",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/news?toDate=2024-11-30T23:59:59Z",
+          "host": ["{{base_url}}"],
+          "path": ["news"],
+          "query": [
+            {
+              "key": "toDate",
+              "value": "2024-11-30T23:59:59Z",
+              "description": "Filter until date (ISO 8601)"
+            }
+          ]
+        },
+        "description": "Get news until a specific date"
+      }
+    },
+    {
+      "name": "Search with Date Range and Pagination",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/news?q=economia&fromDate=2024-11-01T00:00:00Z&toDate=2024-11-30T23:59:59Z&limit=20&offset=0",
+          "host": ["{{base_url}}"],
+          "path": ["news"],
+          "query": [
+            {
+              "key": "q",
+              "value": "economia",
+              "description": "Search keyword"
+            },
+            {
+              "key": "fromDate",
+              "value": "2024-11-01T00:00:00Z",
+              "description": "Filter from date"
+            },
+            {
+              "key": "toDate",
+              "value": "2024-11-30T23:59:59Z",
+              "description": "Filter to date"
+            },
+            {
+              "key": "limit",
+              "value": "20"
+            },
+            {
+              "key": "offset",
+              "value": "0"
+            }
+          ]
+        },
+        "description": "Search news with date range, keyword, and pagination"
+      }
+    },
+    {
+      "name": "Swagger API Docs",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/api-docs",
+          "host": ["{{base_url}}"],
+          "path": ["api-docs"]
+        },
+        "description": "Swagger UI documentation"
+      }
+    }
+  ]
+}

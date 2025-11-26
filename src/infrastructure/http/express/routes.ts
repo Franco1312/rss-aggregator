@@ -25,13 +25,6 @@ export function createRoutes(newsController: NewsController): Router {
     }
   );
 
-  router.get('/sources', (req, res) => {
-    newsController.getSources(req, res).catch((error) => {
-      console.error('Unhandled error in /sources route:', error);
-      res.status(500).json({ error: 'Internal server error' });
-    });
-  });
-
   return router;
 }
 

@@ -94,45 +94,6 @@ export const commonSchemas: Record<string, OpenAPIV3.SchemaObject> = {
     },
     required: ['items', 'total', 'limit', 'offset'],
   },
-  Source: {
-    type: 'object',
-    properties: {
-      id: {
-        type: 'string',
-        example: 'clarin-economia',
-      },
-      name: {
-        type: 'string',
-        example: 'Clarín - Economía',
-      },
-      url: {
-        type: 'string',
-        format: 'uri',
-        example: 'https://www.clarin.com/rss/economia/',
-      },
-      defaultCategory: {
-        type: 'string',
-        example: 'economia',
-      },
-      isActive: {
-        type: 'boolean',
-        example: true,
-      },
-    },
-    required: ['id', 'name', 'url', 'defaultCategory', 'isActive'],
-  },
-  SourcesResponse: {
-    type: 'object',
-    properties: {
-      sources: {
-        type: 'array',
-        items: {
-          $ref: '#/components/schemas/Source',
-        },
-      },
-    },
-    required: ['sources'],
-  },
   HealthResponse: {
     type: 'object',
     properties: {

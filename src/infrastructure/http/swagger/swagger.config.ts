@@ -2,7 +2,6 @@ import { OpenAPIV3 } from 'openapi-types';
 import { commonSchemas } from './schemas/common.schemas';
 import { healthPath } from './paths/health.path';
 import { newsPath } from './paths/news.path';
-import { sourcesPath } from './paths/sources.path';
 
 export const swaggerDocument: OpenAPIV3.Document = {
   openapi: '3.0.0',
@@ -29,10 +28,6 @@ export const swaggerDocument: OpenAPIV3.Document = {
       name: 'News',
       description: 'News aggregation and search endpoints',
     },
-    {
-      name: 'Sources',
-      description: 'RSS sources management endpoints',
-    },
   ],
   components: {
     schemas: commonSchemas,
@@ -40,6 +35,5 @@ export const swaggerDocument: OpenAPIV3.Document = {
   paths: {
     '/health': healthPath,
     '/news': newsPath,
-    '/sources': sourcesPath,
   },
 };

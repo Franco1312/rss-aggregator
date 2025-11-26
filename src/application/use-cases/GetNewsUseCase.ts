@@ -5,8 +5,9 @@ import { LOG_EVENTS } from '@/infrastructure/logger/LOG_EVENTS';
 import { FetchAndAggregateNewsUseCase } from './FetchAndAggregateNewsUseCase';
 
 export interface GetNewsParams {
-  sourceId?: string;
   q?: string;
+  fromDate?: Date;
+  toDate?: Date;
   limit?: number;
   offset?: number;
 }
@@ -25,7 +26,7 @@ export class GetNewsUseCase {
   ) {}
 
   async execute(params: GetNewsParams = {}): Promise<GetNewsResult> {
-    const { sourceId, q, limit = 20, offset = 0 } = params;
+    const { q, fromDate, toDate, limit = 20, offset = 0 } = params;
 
     // Intentar obtener del caché
     let allNewsItems = this.cache.get<NewsItem[]>('news-all');
@@ -47,10 +48,7 @@ export class GetNewsUseCase {
     // Aplicar filtros
     let filteredItems = allNewsItems;
 
-    if (sourceId) {
-      filteredItems = filteredItems.filter((item) => item.sourceId === sourceId);
-    }
-
+    // Filtrar por búsqueda de texto
     if (q) {
       const lowerQuery = q.toLowerCase();
       filteredItems = filteredItems.filter((item) => {
@@ -59,6 +57,30 @@ export class GetNewsUseCase {
         return titleMatch || summaryMatch;
       });
     }
+
+    // Filtrar por rango de fechas
+    if (fromDate || toDate) {
+      filteredItems = filteredItems.filter((item) => {
+        const itemDate = item.publishedAt || item.fetchedAt;
+        
+        if (fromDate && itemDate < fromDate) {
+          return false;
+        }
+        
+        if (toDate && itemDate > toDate) {
+          return false;
+        }
+        
+        return true;
+      });
+    }
+
+    // Ordenar por fecha (más recientes primero)
+    filteredItems.sort((a, b) => {
+      const dateA = a.publishedAt?.getTime() || a.fetchedAt.getTime();
+      const dateB = b.publishedAt?.getTime() || b.fetchedAt.getTime();
+      return dateB - dateA; // Descendente (más reciente primero)
+    });
 
     const total = filteredItems.length;
 
